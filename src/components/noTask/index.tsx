@@ -7,7 +7,6 @@ type NoIdleTaskProps = {
 };
 
 const NoTasks = ({ title }: NoIdleTaskProps) => {
-  console.log("noTask is rendering");
   return (
     <>
       <TableRow

@@ -4,7 +4,6 @@ import { Todos } from "../../types";
 import { v4 as uuid } from "uuid";
 import { useDispatch } from "react-redux";
 import { addTodoAction } from "../../store/action";
-import { useLocalStorage } from "../../hooks";
 import { StateManager } from "../../classes";
 
 const TodoForm = () => {
@@ -25,10 +24,9 @@ const TodoForm = () => {
   };
 
   const addTodoHandler = () => {
-    alert("Hi");
     const newTodoClass = new StateManager();
-    newTodoClass.updateState(todo);
-    todo && dispatch(addTodoAction(todo));
+    newTodoClass.addTodo(todo as Todos)
+     dispatch(addTodoAction(todo as Todos));
     setTodo({
       id: "",
       done: false,
@@ -38,7 +36,6 @@ const TodoForm = () => {
     });
   };
 
-  console.log("todo", todo);
   return (
     <>
       <form className="flex border bg-white w-full p-1.5 justify-between rounded-lg flex-row">

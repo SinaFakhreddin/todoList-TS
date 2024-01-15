@@ -27,7 +27,7 @@ export const useLocalStorage = <T,>(
         localStorage.setItem(key, JSON.stringify(state));
       }
     } catch (e) {
-      console.log(e);
+      throw(e);
     }
   }, [state, key]);
 

@@ -1,14 +1,11 @@
-import React, { useState, memo, useEffect } from "react";
+import React, { useState, memo } from "react";
 import TableRow from "@mui/material/TableRow";
 import {
-  Badge,
   Box,
   Button,
-  Chip,
   Collapse,
   IconButton,
   TableCell,
-  Tooltip,
   Typography,
 } from "@mui/material";
 import Table from "@mui/material/Table";
@@ -16,15 +13,12 @@ import TableHead from "@mui/material/TableHead";
 import TableBody from "@mui/material/TableBody";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import TaskIcon from "@mui/icons-material/Task";
-import WarningOutlinedIcon from "@mui/icons-material/WarningOutlined";
-import WorkHistoryOutlinedIcon from "@mui/icons-material/WorkHistoryOutlined";
 import { Todos } from "../../types";
 import { rowColor, todoStatusIcon } from "../../utils";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteTodoAction, doneTodoAction } from "../../store/action";
-import DoneIcon from "@mui/icons-material/Done";
 import TaskIcons from "../taskIcons";
+import {StateManager} from "../../classes";
 
 type RowType = {
   key: number;
@@ -32,15 +26,12 @@ type RowType = {
   hasPermissionToChangeDoneStatus: number;
 };
 
-function Row({ todo, key, hasPermissionToChangeDoneStatus }: RowType) {
+function Row({ todo, hasPermissionToChangeDoneStatus }: RowType) {
   const [open, setOpen] = useState<boolean>(false);
   const indexOfTodo = useSelector<Todos[], number>((state) =>
     state.indexOf(todo)
   );
-  console.log(
-    "state",
-    useSelector((state) => state)
-  );
+
 
   const todoDetail = [todo.startTime, todo.endTime, todo.done];
   const dispatch = useDispatch();
@@ -48,32 +39,38 @@ function Row({ todo, key, hasPermissionToChangeDoneStatus }: RowType) {
   const doneHandlerTodo = () => {
     if (hasPermissionToChangeDoneStatus !== 0) {
       return;
-    } else dispatch(doneTodoAction({ done: true, id: todo.id }));
+    } else {
+      const newInstanceOfTodo = new StateManager()
+      newInstanceOfTodo.doneHandler(todo.id)
+      dispatch(doneTodoAction({ done: true, id: todo.id }))
+    }
   };
 
   const idleHandler = () => {
     if (hasPermissionToChangeDoneStatus !== 0) {
       return;
-    } else dispatch(doneTodoAction({ done: "idle", id: todo.id }));
+    } else {
+      const newInstanceOfTodo = new StateManager()
+      newInstanceOfTodo.idleHandler(todo.id)
+      dispatch(doneTodoAction({ done: "idle", id: todo.id }))
+    }
   };
 
   const unDoneHandler = () => {
     if (hasPermissionToChangeDoneStatus !== 0) {
       return;
-    }
+    } else {
+      const newInstanceOfTodo = new StateManager()
+      newInstanceOfTodo.unDoneHandler(todo.id)
     dispatch(doneTodoAction({ done: false, id: todo.id }));
+    }
   };
 
-  // const showBadge = {
-  //   true: "success",
-  //   false: "error",
-  //   idle: "warning",
-  // };
 
-  // showBadge[todo.done as keyof typeof showBadge]
-  console.log("row is rendering");
 
   const deleteTodoHandler = (id: string) => {
+    const todoInstance = new StateManager()
+    todoInstance.removeTodo(id)
     dispatch(deleteTodoAction({ id: id }));
   };
   return (

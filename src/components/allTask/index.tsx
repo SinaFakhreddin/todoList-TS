@@ -11,7 +11,6 @@ type AllTasksTypes = {
 const AllTask = ({ tabPanelIndex }: AllTasksTypes) => {
   const todos = useSelector((state: Todos[]) => state);
 
-  console.log("allTasks is rendering");
   return (
     <>
       <TableBody>

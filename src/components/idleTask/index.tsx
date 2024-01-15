@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { IconButton, TableCell } from "@mui/material";
+import {  TableCell } from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import { Todos } from "../../types";
 import Row from "../row";
@@ -19,7 +19,6 @@ const IdleTasks = ({ tabPanelIndex }: IdleTasksProps) => {
       .filter((todo) => todo.done !== true)
       .filter((todo) => todo.done !== false)
   );
-  console.log("idleTasks is rendering");
 
   return (
     <div className={"w-full p-2 mt-2"}>

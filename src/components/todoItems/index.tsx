@@ -12,8 +12,7 @@ type TodoItemsType = {
   index: number;
 };
 
-const TodoItems = ({ id, todo, end, start, done, index }: TodoItemsType) => {
-  console.log("todo items is rendering");
+const TodoItems = ({  todo, end, start, done, index }: TodoItemsType) => {
   return (
     <div
       className={

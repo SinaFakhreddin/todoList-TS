@@ -3,7 +3,7 @@ import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { IconButton, TableCell } from "@mui/material";
+import {  TableCell } from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import { Todos } from "../../types";
 import Row from "../row";
@@ -20,7 +20,6 @@ const Failedtasks = ({ tabPanelIndex }: FailedTasksProps) => {
       .filter((todo) => todo.done !== "idle")
   );
 
-  console.log("failedtasks is rendering");
 
   return (
     <div className={"w-full p-2 mt-2"}>

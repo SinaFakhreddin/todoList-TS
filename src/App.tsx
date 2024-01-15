@@ -1,16 +1,11 @@
-import React, { useEffect, useReducer } from "react";
+import React from "react";
 import bgi from "./assets/image/background.jpeg";
 import TodoForm from "./components/todoForm";
 import TodoList from "./components/todoList";
 import "./../src/styles/index.css";
-import { useSelector } from "react-redux";
 
 const App = () => {
-  const state = useSelector((state) => state);
 
-  useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(state));
-  }, [state]);
 
   return (
     <div

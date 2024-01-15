@@ -1,37 +1,84 @@
 import { Todos } from "../types";
 
 export class StateManager {
-  private state: Todos | undefined;
+  private todos :Todos[]
 
   constructor() {
-    this.state = this.loadState();
+    this.todos = this.loadTodos()
   }
 
-  private loadState(): Todos | undefined {
+
+  private loadTodos():Todos[]{
     try {
-      const serializedState = localStorage.getItem("todoList");
-      return serializedState ? JSON.parse(serializedState) : {};
+      const storedTodo = localStorage.getItem("todos")
+      return storedTodo ? JSON.parse(storedTodo) : []
     } catch (e) {
-      console.log("error loading in load state in class");
-      return undefined;
+      throw(e)
     }
   }
 
-  private saveState(): void {
+
+
+  private saveToLocalStorage(){
     try {
-      const serializedState = JSON.stringify(this.state);
-      localStorage.setItem("todoList", serializedState);
+      localStorage.setItem("todos" , JSON.stringify(this.todos))
     } catch (e) {
-      console.error("error in Ssaving State in class");
+      throw (e)
     }
   }
 
-  updateState(newState: Todos | undefined): void {
-    this.state = { ...this.state, ...newState };
-    this.saveState();
+   addTodo(todo:Todos){
+    this.todos = [...this.todos , todo]
+     this.saveToLocalStorage()
   }
 
-  getState(): Record<string, any> {
-    return this.state;
+  removeTodo(todoId:string){
+    this.todos = this.todos.filter((todo)=>todo?.id !==todoId)
+    this.saveToLocalStorage()
   }
+
+
+  getTodos(){
+    alert("get todo run")
+    return this.todos
+  }
+
+
+  doneHandler(id:string){
+    this.todos = this.todos.map((todo)=>{
+      if (todo.id===id){
+        return {
+          ...todo ,
+          done:true
+        }
+      } else return todo
+    })
+
+    this.saveToLocalStorage()
+  }
+
+  unDoneHandler(id:string){
+    this.todos = this.todos.map((todo)=>{
+      if (todo.id===id){
+        return {
+          ...todo , done:false
+        }
+      } else return todo
+    })
+
+    this.saveToLocalStorage()
+  }
+
+  idleHandler(id:string){
+    this.todos = this.todos.map((todo)=>{
+      if (todo.id===id){
+        return {
+          ...todo ,
+          done:"idle"
+        }
+      } else return todo
+    })
+    this.saveToLocalStorage()
+  }
+
 }

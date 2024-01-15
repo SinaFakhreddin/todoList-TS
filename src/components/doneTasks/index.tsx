@@ -21,7 +21,6 @@ const DoneTasks = ({ tabPanelIndex }: DoneTasksProps) => {
       .filter((item) => item.done !== false)
   );
 
-  console.log("done tasks is rendering");
 
   return (
     <div className={"w-full p-2 mt-2"}>
